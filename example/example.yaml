@@ -1,0 +1,12 @@
+- question: "What is the equation for this graph?"
+  image: "question1.png"
+  options:
+    - answer: "y = 2x"
+      text: "Incorrect. y = 2x is the graph of a straight line with slope = 2"
+      image: "question1_a.png"
+    - answer: "y = x ** 2"
+      text: "Correct! This is a graph of y = x ** 2."
+      image: "question1_b.png"
+    - answer: "y = x ** 3"
+      text: "Incorrect. y = x**3 is the graph of a cubic."
+      image: "question1_c.png"
