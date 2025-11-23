@@ -35,7 +35,6 @@ ApplicationWindow {
                 width: parent.width
             }
 
-
             Column {
                 id: optionsContainer
                 spacing: 10
@@ -50,10 +49,15 @@ ApplicationWindow {
 
                         RadioButton {
                             text: modelData.answer
+                            checked: modelData.selected
+                            onClicked: quiz.submitAnswer(modelData.index)
+                        }
+                        Text {
+                            text: modelData.feedback
+                            wrapMode: Text.WordWrap
                         }
                     }
                 }
-
             }
         }
     }
