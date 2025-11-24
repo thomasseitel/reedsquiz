@@ -53,11 +53,18 @@ ApplicationWindow {
                             onClicked: quiz.submitAnswer(modelData.index)
                         }
                         Text {
-                            text: modelData.feedback
                             wrapMode: Text.WordWrap
                         }
                     }
                 }
+            }
+
+            Text {
+                id: feedback
+                text: quiz.feedback
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                width: parent.width
             }
         }
     }
