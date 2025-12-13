@@ -7,6 +7,7 @@
     - answer: "y = x ** 2"
       feedback: "Correct! This is a graph of y = x ** 2."
       image: "question1_b.png"
+      correct: True
     - answer: "y = x ** 3"
       feedback: "Incorrect. y = x**3 is the graph of a cubic."
       image: "question1_c.png"
@@ -24,6 +25,7 @@
       feedback: "Partially correct: Brazil is in South America."
     - answer: "C and D"
       feedback: "Correct! Argentina and Brazil are South American Countries"
+      correct: True
     - answer: "All of them"
       feedback: "Nope. Some of these are European countries."
 

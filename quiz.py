@@ -50,3 +50,19 @@ class Quiz(QObject):
     @Property(str, notify=questionChanged)
     def feedback(self):
         return self.current_question.feedback
+
+    @Property(bool, notify=questionChanged)
+    def mayContinue(self):
+        return self.current_question.correct
+
+    @Property(str, notify=questionChanged)
+    def continueText(self):
+        if self.questionIndex < len(self.questions) - 1:
+            return "Next"
+        else:
+            return "Finished"
+
+    @Slot()
+    def nextQuestion(self):
+        if self.questionIndex < len(self.questions) - 1:
+            self.loadNextQuestion()

@@ -75,5 +75,15 @@ ApplicationWindow {
                 width: parent.width
             }
         }
+
+        Button{
+            visible: quiz.mayContinue
+            text: quiz.continueText
+            width: 100
+            height: 50
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            onClicked: quiz.nextQuestion()
+        }
     }
 }

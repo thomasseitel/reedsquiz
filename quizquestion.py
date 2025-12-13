@@ -11,6 +11,7 @@ class QuizQuestion(QObject):
         super(QuizQuestion, self).__init__(parent=None)
         self.file_location = file_location
         self._data = data
+        self._options = self._data.get("options", [])
         self.selection_index: Optional[int] = None
 
     def select(self, index: Optional[int] = None):
@@ -30,9 +31,16 @@ class QuizQuestion(QObject):
             return None
 
     @property
+    def correct(self) -> bool:
+        try:
+            return self._options[self.selection_index].get("correct", False)
+        except (IndexError, KeyError, TypeError):
+            return False
+
+    @property
     def options(self):
         result = []
-        for index, option in enumerate(self._data.get("options", [])):
+        for index, option in enumerate(self._options):
             selected = index == self.selection_index
             result.append(
                 {
