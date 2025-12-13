@@ -19,7 +19,15 @@ ApplicationWindow {
             width: parent.width - 40
 
             Image {
-                source: quiz.mainImage
+                id: img
+                property int version: 0
+
+                Connections {
+                    target: quiz
+                    function onQuestionChanged() { img.version++ }
+                }
+
+                source: "image://imageprovider/live_feed?" + version
                 width: 400
                 height: 400
                 fillMode: Image.PreserveAspectFit

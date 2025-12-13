@@ -1,16 +1,24 @@
+import pathlib
+from functools import cached_property
 from typing import Optional
 
 from PySide6.QtCore import QObject, Signal, Property, Slot
+from PySide6.QtGui import QImage
 
 
 class QuizQuestion(QObject):
-    def __init__(self, data: dict, parent=None):
-        super(QuizQuestion, self).__init__(parent)
+    def __init__(self, data: dict, file_location: pathlib.Path):
+        super(QuizQuestion, self).__init__(parent=None)
+        self.file_location = file_location
         self._data = data
         self.selection_index: Optional[int] = None
 
     def select(self, index: Optional[int] = None):
         self.selection_index = index
+        try:
+            del self.image
+        except AttributeError:
+            pass
 
     @property
     def selection(self) -> Optional[dict]:
@@ -39,15 +47,21 @@ class QuizQuestion(QObject):
     def question(self) -> str:
         return self._data.get("question", "Question not found")
 
-    @property
-    def image(self) -> Optional[str]:
+    @cached_property
+    def image(self) -> Optional[QImage]:
         selection = self.selection
+        filename = None
         if selection:
             try:
-                return selection["image"]
+                filename = selection["image"]
             except KeyError:
                 pass
-        return self._data.get("image", None)
+        if filename is None:
+            filename = self._data.get("image", None)
+        if filename is None:
+            return None
+        else:
+            return QImage(str(self.file_location / filename))
 
     @property
     def feedback(self) -> str:

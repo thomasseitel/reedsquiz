@@ -12,6 +12,7 @@ if __name__ == "__main__":
     engine = QQmlApplicationEngine()
     quiz = Quiz(BASE_DIR / "example" / "example.yaml")
     engine.rootContext().setContextProperty("quiz", quiz)
+    engine.addImageProvider("imageprovider", quiz.image_provider)
     engine.load(BASE_DIR / "main.qml")
     if not engine.rootObjects():
         sys.exit(-1)
