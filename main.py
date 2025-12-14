@@ -16,4 +16,5 @@ if __name__ == "__main__":
     engine.load(BASE_DIR / "main.qml")
     if not engine.rootObjects():
         sys.exit(-1)
+    app.aboutToQuit.connect(engine.deleteLater)
     sys.exit(app.exec())
