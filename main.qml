@@ -2,10 +2,19 @@ import QtQuick
 import QtQuick.Controls
 
 ApplicationWindow {
+    id: appWindow
     visible: true
     width: 800
     height: 800
     title: "Reed's Quiz"
+
+   Connections {
+        target: quiz
+
+        function onQuizFinished() {
+            appWindow.close()
+        }
+   }
 
     Rectangle {
         anchors.fill: parent

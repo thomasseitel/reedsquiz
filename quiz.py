@@ -11,6 +11,7 @@ from quizquestion import QuizQuestion
 class Quiz(QObject):
 
     questionChanged = Signal()
+    quizFinished = Signal()
 
     def __init__(self, file_path: os.PathLike | str | bytes):
         super().__init__()
@@ -20,15 +21,19 @@ class Quiz(QObject):
             self.questions = [QuizQuestion(d, file_location) for d in data]
         self.image_provider = QuizImageHandler()
         self.questionIndex = None
-        self.loadNextQuestion()
+        self.nextQuestion()
 
-    def loadNextQuestion(self):
+    @Slot()
+    def nextQuestion(self):
         if self.questionIndex is None:
             self.questionIndex = 0
         else:
             self.questionIndex += 1
-        self.image_provider.set_question(self.current_question)
-        self.questionChanged.emit()
+        if self.questionIndex >= len(self.questions):
+            self.quizFinished.emit()
+        else:
+            self.image_provider.set_question(self.current_question)
+            self.questionChanged.emit()
 
     @property
     def current_question(self) -> QuizQuestion:
@@ -61,8 +66,3 @@ class Quiz(QObject):
             return "Next"
         else:
             return "Finished"
-
-    @Slot()
-    def nextQuestion(self):
-        if self.questionIndex < len(self.questions) - 1:
-            self.loadNextQuestion()
