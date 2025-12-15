@@ -1,31 +1,29 @@
-- question: "What is the equation for this graph?"
-  image: "question1.png"
+- question: What is the equation for this graph?
+  image: question1.png
   options:
-    - answer: "y = 2x"
-      feedback: "Incorrect. y = 2x is the graph of a straight line with slope = 2"
-      image: "question1_a.png"
-    - answer: "y = x ** 2"
-      feedback: "Correct! This is a graph of y = x ** 2."
-      image: "question1_b.png"
-      correct: True
-    - answer: "y = x ** 3"
-      feedback: "Incorrect. y = x**3 is the graph of a cubic."
-      image: "question1_c.png"
-
-- question: "Which of these countries is in South America?"
-  image: "question2.png"
+  - answer: y = 2x
+    feedback: Incorrect. y = 2x is the graph of a straight line with slope = 2
+    image: question1_a.png
+  - answer: y = x ** 2
+    feedback: Correct! This is a graph of y = x ** 2.
+    image: question1_b.png
+    correct: true
+  - answer: y = x ** 3
+    feedback: Incorrect. y = x**3 is the graph of a cubic.
+    image: question1_c.png
+- question: Which of these countries is in South America?
+  image: question2.png
   options:
-    - answer: "A"
-      feedback: "Sorry. France is in Europe."
-    - answer: "B"
-      feedback: "No, Germany is a European country"
-    - answer: "C"
-      feedback: "Partially correct: Argentina is in South America."
-    - answer: "D"
-      feedback: "Partially correct: Brazil is in South America."
-    - answer: "C and D"
-      feedback: "Correct! Argentina and Brazil are South American Countries"
-      correct: True
-    - answer: "All of them"
-      feedback: "Nope. Some of these are European countries."
-
+  - answer: A
+    feedback: Sorry. France is in Europe.
+  - answer: B
+    feedback: No, Germany is a European country
+  - answer: C
+    feedback: 'Partially correct: Argentina is in South America.'
+  - answer: D
+    feedback: 'Partially correct: Brazil is in South America.'
+  - answer: C and D
+    feedback: Correct! Argentina and Brazil are South American Countries
+    correct: true
+  - answer: All of them
+    feedback: Nope. Some of these are European countries.
