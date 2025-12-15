@@ -1,80 +1,62 @@
 import pathlib
-from functools import cached_property
 from typing import Optional
 
-from PySide6.QtCore import QObject, Signal, Property, Slot
+from PySide6.QtCore import QObject
 from PySide6.QtGui import QImage
+
+from answer import Answer
 
 
 class Question(QObject):
     def __init__(self, data: dict, file_location: pathlib.Path):
         super(Question, self).__init__(parent=None)
         self.file_location = file_location
-        self._data = data
-        self._options = self._data.get("options", [])
-        self.selection_index: Optional[int] = None
+        self.question = data.get("question", "")
+        self.image_url = data.get("image", "")
+        if self.image_url:
+            self._image = QImage(str(file_location / self.image_url))
+        else:
+            self._image = None
+        self.answers = [Answer(d, self.file_location) for d in data.get("options", [])]
+        self.selection = None
 
     def select(self, index: Optional[int] = None):
-        self.selection_index = index
         try:
-            del self.image
-        except AttributeError:
-            pass
-
-    @property
-    def selection(self) -> Optional[dict]:
-        if self.selection_index is None:
-            return None
-        try:
-            return self._data["options"][self.selection_index]
+            self.selection = self.answers[index]
         except (IndexError, KeyError):
-            return None
+            self.selection = None
 
     @property
     def correct(self) -> bool:
-        try:
-            return self._options[self.selection_index].get("correct", False)
-        except (IndexError, KeyError, TypeError):
+        if self.selection is None:
             return False
+        else:
+            return self.selection.correct
 
     @property
     def options(self):
         result = []
-        for index, option in enumerate(self._options):
-            selected = index == self.selection_index
+        for index, answer in enumerate(self.answers):
+            selected = answer is self.selection
             result.append(
                 {
                     "index": index,
-                    "answer": option.get("answer", ""),
+                    "answer": answer.text,
                     "selected": selected,
                 }
             )
         return result
 
     @property
-    def question(self) -> str:
-        return self._data.get("question", "Question not found")
-
-    @cached_property
     def image(self) -> Optional[QImage]:
-        selection = self.selection
-        filename = None
-        if selection:
-            try:
-                filename = selection["image"]
-            except KeyError:
-                pass
-        if filename is None:
-            filename = self._data.get("image", None)
-        if filename is None:
-            return None
-        else:
-            return QImage(str(self.file_location / filename))
+        result = None
+        if self.selection is not None:
+            result = self.selection.image
+        return result or self._image
 
     @property
     def feedback(self) -> str:
-        selection = self.selection
-        if selection:
-            return selection.get("feedback", "")
+        if self.selection is not None:
+            return self.selection.feedback
         else:
             return ""
