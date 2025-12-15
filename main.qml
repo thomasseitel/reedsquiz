@@ -69,9 +69,6 @@ ApplicationWindow {
                             checked: modelData.selected
                             onClicked: quiz.submitAnswer(modelData.index)
                         }
-                        Text {
-                            wrapMode: Text.WordWrap
-                        }
                     }
                 }
             }
