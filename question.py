@@ -6,9 +6,9 @@ from PySide6.QtCore import QObject, Signal, Property, Slot
 from PySide6.QtGui import QImage
 
 
-class QuizQuestion(QObject):
+class Question(QObject):
     def __init__(self, data: dict, file_location: pathlib.Path):
-        super(QuizQuestion, self).__init__(parent=None)
+        super(Question, self).__init__(parent=None)
         self.file_location = file_location
         self._data = data
         self._options = self._data.get("options", [])

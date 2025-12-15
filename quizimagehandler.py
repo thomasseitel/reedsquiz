@@ -3,7 +3,7 @@ from typing import Optional
 from PySide6.QtGui import QImage, QColor
 from PySide6.QtQuick import QQuickImageProvider
 
-from quizquestion import QuizQuestion
+from question import Question
 
 
 class QuizImageHandler(QQuickImageProvider):
@@ -12,9 +12,9 @@ class QuizImageHandler(QQuickImageProvider):
         self._image_data = None
         self.placeholder = QImage(100, 100, QImage.Format.Format_RGB32)
         self.placeholder.fill(QColor("red"))
-        self.question: Optional[QuizQuestion] = None
+        self.question: Optional[Question] = None
 
-    def set_question(self, question: QuizQuestion):
+    def set_question(self, question: Question):
         self.question = question
 
     def requestImage(self, id, size, requestedSize):

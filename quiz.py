@@ -5,7 +5,7 @@ import yaml
 from PySide6.QtCore import QObject, Signal, Property, Slot
 
 from quizimagehandler import QuizImageHandler
-from quizquestion import QuizQuestion
+from question import Question
 
 
 class Quiz(QObject):
@@ -18,7 +18,7 @@ class Quiz(QObject):
         file_location = pathlib.Path(file_path).parent
         with open(file_path, "r") as f:
             data = yaml.safe_load(f)
-            self.questions = [QuizQuestion(d, file_location) for d in data]
+            self.questions = [Question(d, file_location) for d in data]
         self.image_provider = QuizImageHandler()
         self.questionIndex = None
         self.nextQuestion()
@@ -36,7 +36,7 @@ class Quiz(QObject):
             self.questionChanged.emit()
 
     @property
-    def current_question(self) -> QuizQuestion:
+    def current_question(self) -> Question:
         return self.questions[self.questionIndex]
 
     @Slot(int)
