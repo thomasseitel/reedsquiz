@@ -1,3 +1,19 @@
+- question: Which of these countries is in South America?
+  image: countries.png
+  options:
+  - answer: A
+    feedback: Sorry. France is in Europe.
+  - answer: B
+    feedback: No, Germany is a European country
+  - answer: C
+    feedback: 'Partially correct: Argentina is in South America.'
+  - answer: D
+    feedback: 'Partially correct: Brazil is in South America.'
+  - answer: C and D
+    feedback: Correct! Argentina and Brazil are South American Countries
+    correct: true
+  - answer: All of them
+    feedback: Nope. Some of these are European countries.
 - question: What is the equation for this graph?
   plot:
     series:
@@ -565,19 +581,3 @@
       y_limits:
       - -20
       - 100
-- question: Which of these countries is in South America?
-  image: question2.png
-  options:
-  - answer: A
-    feedback: Sorry. France is in Europe.
-  - answer: B
-    feedback: No, Germany is a European country
-  - answer: C
-    feedback: 'Partially correct: Argentina is in South America.'
-  - answer: D
-    feedback: 'Partially correct: Brazil is in South America.'
-  - answer: C and D
-    feedback: Correct! Argentina and Brazil are South American Countries
-    correct: true
-  - answer: All of them
-    feedback: Nope. Some of these are European countries.
