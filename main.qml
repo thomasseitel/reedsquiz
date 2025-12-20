@@ -4,8 +4,8 @@ import QtQuick.Controls
 ApplicationWindow {
     id: appWindow
     visible: true
-    width: 800
-    height: 800
+    width: 1000
+    height: 600
     title: "Reed's Quiz"
 
    Connections {
@@ -20,28 +20,27 @@ ApplicationWindow {
         anchors.fill: parent
         anchors.margins: 20
 
+        Image {
+            id: img
+            property int version: 0
+
+            Connections {
+                target: quiz
+                function onQuestionChanged() { img.version++ }
+            }
+
+            source: "image://imageprovider/live_feed?" + version
+            width: 400
+            fillMode: Image.PreserveAspectFit
+            anchors.right: parent.right
+        }
+
         Column {
             id: mainLayout
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.top: img.top
             spacing: 20
-            width: parent.width - 40
-
-            Image {
-                id: img
-                property int version: 0
-
-                Connections {
-                    target: quiz
-                    function onQuestionChanged() { img.version++ }
-                }
-
-                source: "image://imageprovider/live_feed?" + version
-                width: 400
-                height: 400
-                fillMode: Image.PreserveAspectFit
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
+            width: parent.width - img.width
 
             Text {
                 id: question
