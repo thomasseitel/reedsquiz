@@ -1,4 +1,5 @@
 import pathlib
+from collections import OrderedDict
 from typing import Optional
 
 from PySide6.QtCore import QObject
@@ -19,6 +20,14 @@ class Question(QObject):
             self._image = None
         self.answers = [Answer(d, self.file_location) for d in data.get("options", [])]
         self.selection = None
+
+    def get_data_dict(self):
+        result = dict()
+        result["question"] = self.question
+        if self.image_url:
+            result["image"] = self.image_url
+        result["options"] = [answer.get_data_dict() for answer in self.answers]
+        return result
 
     def select(self, index: Optional[int] = None):
         try:

@@ -23,6 +23,14 @@ class Quiz(QObject):
         self.questionIndex = None
         self.nextQuestion()
 
+    def to_yaml(self) -> str:
+        data = [question.get_data_dict() for question in self.questions]
+        return yaml.safe_dump(data, default_flow_style=False, sort_keys=False)
+
+    def save_as(self, file_path: os.PathLike | str | bytes):
+        with open(file_path, "w") as f:
+            f.write(self.to_yaml())
+
     @Slot()
     def nextQuestion(self):
         if self.questionIndex is None:
