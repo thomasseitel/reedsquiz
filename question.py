@@ -6,6 +6,7 @@ from PySide6.QtCore import QObject
 from PySide6.QtGui import QImage
 
 from answer import Answer
+from plot import Plot
 
 
 class Question(QObject):
@@ -13,9 +14,12 @@ class Question(QObject):
         super(Question, self).__init__(parent=None)
         self.file_location = file_location
         self.question = data.get("question", "")
-        self.image_url = data.get("image", "")
-        if self.image_url:
+        if "image" in data:
+            self.image_url = data["image"]
             self._image = QImage(str(file_location / self.image_url))
+        elif "plot" in data:
+            self.plot = Plot(data["plot"])
+            self._image = self.plot.make_image()
         else:
             self._image = None
         self.answers = [Answer(d, self.file_location) for d in data.get("options", [])]
@@ -24,8 +28,10 @@ class Question(QObject):
     def get_data_dict(self):
         result = dict()
         result["question"] = self.question
-        if self.image_url:
+        if hasattr(self, "image_url"):
             result["image"] = self.image_url
+        elif hasattr(self, "plot"):
+            result["plot"] = self.plot.get_data_dict()
         result["options"] = [answer.get_data_dict() for answer in self.answers]
         return result
 
